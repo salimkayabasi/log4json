@@ -1,6 +1,6 @@
 {
   "name": "log4json",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "JSON wrapper for log4js",
   "main": "index.js",
   "scripts": {
