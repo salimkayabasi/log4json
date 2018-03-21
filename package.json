@@ -1,17 +1,34 @@
 {
   "name": "log4json",
   "version": "0.0.2",
-  "description": "",
+  "description": "JSON wrapper for log4js",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "major": "npm version major -m \"New major version %s\"",
+    "minor": "npm version minor -m \"New minor version %s\"",
+    "patch": "npm version patch -m \"New patch version %s\"",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "pretest": "yarn run lint",
+    "test": "jest"
   },
   "author": {
     "name": "Salim KAYABASI",
     "email": "salim.kayabasi@gmail.com"
   },
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/salimkayabasi/log4json.git"
+  },
+  "homepage": "https://github.com/salimkayabasi/log4json#readme",
   "dependencies": {
     "lodash": "^4.17.5"
+  },
+  "devDependencies": {
+    "eslint": "^4.19.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.9.0",
+    "jest": "^22.4.2"
   }
 }
