@@ -1,0 +1,17 @@
+{
+  "name": "log4json",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": {
+    "name": "Salim KAYABASI",
+    "email": "salim.kayabasi@gmail.com"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "lodash": "^4.17.5"
+  }
+}
