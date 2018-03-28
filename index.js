@@ -4,11 +4,11 @@ const defaultConfig = {
   separator: ' ',
 };
 
-const createDataOverlays = (items, config) => {
+const transform = (config, items) => {
   const messages = [];
   const overlay = {};
-  _.chain(items)
-    .compact()
+
+  _.compact(items)
     .forEach((item) => {
       if (_.isObject(item)) {
         const result = item instanceof Error
@@ -18,10 +18,9 @@ const createDataOverlays = (items, config) => {
       } else {
         messages.push(item);
       }
-    })
-    .value();
+    });
 
-  if (messages.length) {
+  if (!_.isEmpty(messages)) {
     overlay.msg = messages.join(config.separator);
   }
   return overlay;
@@ -37,11 +36,7 @@ const formatter = (event, config) => {
     output.category = event.categoryName;
   }
 
-  const messages = event.data;
-  if (!_.isEmpty(messages)) {
-    Object.assign(output, createDataOverlays(messages, config));
-  }
-  return output;
+  return _.assignIn(transform(config, event.data), output);
 };
 
 const jsonLayout = (config) => {
