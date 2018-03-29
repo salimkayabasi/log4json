@@ -71,4 +71,31 @@ describe('log4json', () => {
     const result = JSON.parse(logger(eventGenerator('valid', undefined, null)));
     expect(result).toHaveProperty('msg', 'valid');
   });
+  it('should change the pre-reserved keys if the config has', () => {
+    const logger = jsonLayout({
+      props: {
+        ts: '@timestamp',
+        level: 'lvl',
+        category: 'cat',
+        stack: 'error',
+        msg: 'message',
+      },
+    });
+    const result = JSON.parse(logger(eventGeneratorWithCategory('my-category', 'custom props', new Error('stack'))));
+
+    expect(result).not.toHaveProperty('ts');
+    expect(result).toHaveProperty('@timestamp', 'startTime');
+
+    expect(result).not.toHaveProperty('level');
+    expect(result).toHaveProperty('lvl', 'mock');
+
+    expect(result).not.toHaveProperty('category');
+    expect(result).toHaveProperty('cat', 'my-category');
+
+    expect(result).not.toHaveProperty('stack');
+    expect(result).toHaveProperty('error');
+
+    expect(result).not.toHaveProperty('msg');
+    expect(result).toHaveProperty('message', 'custom props');
+  });
 });
