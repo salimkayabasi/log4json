@@ -9,6 +9,10 @@
 
 JSON layout for `log4js`
 
+## Full Example
+
+https://runkit.com/embed/mbtf17i7s8fu
+
 
 ## Example
 
