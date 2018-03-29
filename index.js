@@ -2,6 +2,13 @@ const _ = require('lodash');
 
 const defaultConfig = {
   separator: ' ',
+  props: {
+    ts: 'ts',
+    level: 'level',
+    category: 'category',
+    stack: 'stack',
+    msg: 'msg',
+  },
 };
 
 const transform = (config, items) => {
@@ -12,7 +19,7 @@ const transform = (config, items) => {
     .forEach((item) => {
       if (_.isObject(item)) {
         const result = item instanceof Error
-          ? { stack: item.stack }
+          ? { [config.props.stack]: item.stack }
           : item;
         _.assignIn(overlay, result);
       } else {
@@ -21,19 +28,19 @@ const transform = (config, items) => {
     });
 
   if (!_.isEmpty(messages)) {
-    overlay.msg = messages.join(config.separator);
+    overlay[config.props.msg] = messages.join(config.separator);
   }
   return overlay;
 };
 
 const formatter = (event, config) => {
   const output = {
-    ts: event.startTime,
-    level: event.level.levelStr,
+    [config.props.ts]: event.startTime,
+    [config.props.level]: event.level.levelStr,
   };
 
   if (event.categoryName !== 'default') {
-    output.category = event.categoryName;
+    output[config.props.category] = event.categoryName;
   }
 
   return _.assignIn(transform(config, event.data), output);
