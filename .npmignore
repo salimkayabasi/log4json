@@ -3,4 +3,4 @@ coverage/
 README.md
 .eslintignore
 .eslintrc.yml
-.travis.yml
+.github/
