@@ -1,4 +1,12 @@
-const _ = require('lodash');
+/* istanbul ignore next */
+// https://github.com/you-dont-need/You-Dont-Need-Lodash-Underscore
+const isEmpty = (obj) => [Object, Array]
+  .includes((obj || {}).constructor) && !Object.entries((obj || {})).length;
+// https://github.com/lodash/lodash/blob/4.17.15/lodash.js#L11743-L11745
+const isObject = (value) => {
+  const type = typeof value;
+  return value != null && (type === 'object' || type === 'function');
+};
 
 const defaultConfig = {
   separator: ' ',
@@ -15,19 +23,19 @@ const transform = (config, items) => {
   const messages = [];
   const overlay = {};
 
-  _.compact(items)
+  items.filter(Boolean)
     .forEach((item) => {
-      if (_.isObject(item)) {
+      if (isObject(item)) {
         const result = item instanceof Error
           ? { [config.props.stack]: item.stack }
           : item;
-        _.assignIn(overlay, result);
+        Object.assign(overlay, result);
       } else {
         messages.push(item);
       }
     });
 
-  if (!_.isEmpty(messages)) {
+  if (!isEmpty(messages)) {
     overlay[config.props.msg] = messages.join(config.separator);
   }
   return overlay;
@@ -43,11 +51,11 @@ const formatter = (event, config) => {
     output[config.props.category] = event.categoryName;
   }
 
-  return _.assignIn(transform(config, event.data), output);
+  return Object.assign(transform(config, event.data), output);
 };
 
 const jsonLayout = (config) => {
-  const options = _.assignIn(defaultConfig, config);
+  const options = Object.assign(defaultConfig, config);
   return (event) => {
     const result = formatter(event, options);
     return JSON.stringify(result, null, options.space);
