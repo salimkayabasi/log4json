@@ -1,0 +1,21 @@
+{
+  "extends": [
+    "config:base",
+    "group:definitelyTyped",
+    "group:linters",
+    "group:test",
+    "group:monorepos",
+    "schedule:nonOfficeHours",
+    ":label(dependencies)",
+    ":timezone(Europe/Berlin)",
+    ":enableVulnerabilityAlertsWithLabel(vulnerability)",
+    ":combinePatchMinorReleases",
+    ":rebaseStalePrs",
+    ":automergeDisabled",
+    ":maintainLockFilesWeekly",
+    ":preserveSemverRanges"
+  ],
+  "enabled": true,
+  "masterIssueApproval": true,
+  "masterIssueAutoclose": true
+}
