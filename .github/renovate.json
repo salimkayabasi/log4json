@@ -14,5 +14,6 @@
     ":maintainLockFilesWeekly",
     ":preserveSemverRanges"
   ],
-  "enabled": true
+  "enabled": true,
+  "automerge": true
 }
