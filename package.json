@@ -21,28 +21,6 @@
     "url": "git+https://github.com/salimkayabasi/log4json.git"
   },
   "homepage": "https://github.com/salimkayabasi/log4json#readme",
-  "jest": {
-    "testMatch": [
-      "**/(__tests__|tests|test)/**/*.test.js?(x)"
-    ],
-    "collectCoverage": true,
-    "collectCoverageFrom": [
-      "**/*.{js,jsx}",
-      "!**/node_modules/**",
-      "!**/coverage/**",
-      "!**/build/**",
-      "!**/config/**",
-      "!**/test/**"
-    ],
-    "coverageThreshold": {
-      "global": {
-        "branches": 100,
-        "functions": 100,
-        "lines": 100,
-        "statements": 100
-      }
-    }
-  },
   "devDependencies": {
     "@types/jest": "^26.0.23",
     "eslint": "^7.25.0",
