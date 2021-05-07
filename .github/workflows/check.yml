@@ -1,4 +1,4 @@
-name: Node.js CI
+name: Check
 
 on:
   push:
@@ -13,12 +13,12 @@ jobs:
           - 14.x
           - 16.x
     steps:
-      - uses: actions/checkout@v2.3.4
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v2.1.5
         with:
           node-version: ${{ matrix.node-version }}
-      - run: npm install
+      - uses: actions/checkout@v2.3.4
+      - run: npm ci
       - run: npm run lint
       - run: npm run test
         env:

@@ -9,7 +9,6 @@
     "patch": "npm version patch -m \"New patch version %s\"",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "pretest": "npm run lint",
     "test": "jest --runInBand --forceExit --detectOpenHandles"
   },
   "author": {
