@@ -1,7 +1,5 @@
+.*
 node_modules/
 coverage/
-README.md
-.eslintignore
-.eslintrc.yml
-.github/
+*.md
 test/
