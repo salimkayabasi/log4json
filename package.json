@@ -7,7 +7,6 @@
     "major": "npm version major -m \"New major version %s\"",
     "minor": "npm version minor -m \"New minor version %s\"",
     "patch": "npm version patch -m \"New patch version %s\"",
-    "prelint": "commitlint -f HEAD@{u} --verbose",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "pretest": "npm run lint",
@@ -46,8 +45,6 @@
     }
   },
   "devDependencies": {
-    "@commitlint/cli": "^12.1.1",
-    "@commitlint/config-conventional": "^12.1.1",
     "@types/jest": "^26.0.23",
     "eslint": "^7.25.0",
     "eslint-config-airbnb-base": "^14.2.1",
