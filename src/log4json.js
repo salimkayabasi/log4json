@@ -24,14 +24,14 @@ const defaultConfig = {
   },
 };
 
-const transform = (config, items) => {
+const transform = (options, items) => {
   const messages = [];
   const overlay = {};
   items.filter(Boolean)
     .forEach((item) => {
       if (isObject(item)) {
         const result = item instanceof Error
-          ? { [config.props.stack]: item.stack }
+          ? { [options.props.stack]: item.stack }
           : item;
         Object.assign(overlay, result);
       } else {
@@ -40,7 +40,7 @@ const transform = (config, items) => {
     });
 
   if (!isEmpty(messages)) {
-    overlay[config.props.message] = messages.join(config.separator);
+    overlay[options.props.message] = messages.join(options.separator);
   }
   return overlay;
 };
