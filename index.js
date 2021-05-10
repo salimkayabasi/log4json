@@ -10,6 +10,7 @@ const isObject = (value) => {
 
 const defaultConfig = {
   separator: ' ',
+  space: null,
   props: {
     ts: 'ts',
     level: 'level',
@@ -22,7 +23,6 @@ const defaultConfig = {
 const transform = (config, items) => {
   const messages = [];
   const overlay = {};
-
   items.filter(Boolean)
     .forEach((item) => {
       if (isObject(item)) {
@@ -41,21 +41,26 @@ const transform = (config, items) => {
   return overlay;
 };
 
-const formatter = (event, config) => {
+const formatter = (event, options) => {
   const output = {
-    [config.props.ts]: event.startTime,
-    [config.props.level]: event.level.levelStr,
+    [options.props.ts]: event.startTime,
+    [options.props.level]: event.level.levelStr,
   };
 
   if (event.categoryName !== 'default') {
-    output[config.props.category] = event.categoryName;
+    output[options.props.category] = event.categoryName;
   }
-
-  return Object.assign(transform(config, event.data), output);
+  return {
+    ...transform(options, event.data),
+    ...output,
+  };
 };
 
 const jsonLayout = (config) => {
-  const options = Object.assign(defaultConfig, config);
+  const options = {
+    ...defaultConfig,
+    ...config,
+  };
   return (event) => {
     const result = formatter(event, options);
     return JSON.stringify(result, null, options.space);
