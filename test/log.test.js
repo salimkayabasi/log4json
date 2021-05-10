@@ -73,6 +73,16 @@ describe('log4json', () => {
     expect(result).toHaveProperty('category', 'test-category');
   });
 
+  test('should have default category if it is not omitted', () => {
+    setUpTest({
+      omitDefaultCategory: false,
+    });
+    logger = getLogger();
+    logger.debug();
+    const result = JSON.parse(spyConsole.mock.calls[0][0]);
+    expect(result).toHaveProperty('category', 'default');
+  });
+
   test('should concat all string messages', () => {
     setUpTest();
     logger = getLogger();

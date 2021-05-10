@@ -11,6 +11,7 @@ const isObject = (value) => {
 const defaultConfig = {
   separator: ' ',
   space: null,
+  omitDefaultCategory: true,
   props: {
     ts: 'ts',
     level: 'level',
@@ -47,7 +48,7 @@ const formatter = (event, options) => {
     [options.props.level]: event.level.levelStr,
   };
 
-  if (event.categoryName !== 'default') {
+  if (event.categoryName !== 'default' || !options.omitDefaultCategory) {
     output[options.props.category] = event.categoryName;
   }
   return {
