@@ -1,13 +1,14 @@
-[![npm version](https://badge.fury.io/js/log4json.svg)](http://badge.fury.io/js/log4json)
+[![NPM](https://nodei.co/npm/log4json.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/log4json)
+
+![Github Actions](https://github.com/salimkayabasi/log4json/actions/workflows/check.yml/badge.svg)
+
 [![Dependency Status](https://david-dm.org/salimkayabasi/log4json.svg)](https://david-dm.org/salimkayabasi/log4json)
 [![DevDependency Status](https://david-dm.org/salimkayabasi/log4json/dev-status.svg)](https://david-dm.org/salimkayabasi/log4json#info=devDependencies)
 [![PeerDependency Status](https://david-dm.org/salimkayabasi/log4json/peer-status.svg)](https://david-dm.org/salimkayabasi/log4json#info=peerDependencies)
-[![Build Status](https://travis-ci.org/salimkayabasi/log4json.svg?branch=master)](https://travis-ci.org/salimkayabasi/log4json)
-[![Greenkeeper badge](https://badges.greenkeeper.io/salimkayabasi/log4json.svg)](https://greenkeeper.io/)
 
 # Log4JSON
 
-JSON layout for `log4js`
+JSON layout for [log4js](https://www.npmjs.com/package/log4js). Zero dependency and super slim.
 
 ## Options
 
@@ -77,9 +78,7 @@ configure({
 });
 
 const logger = getLogger('fancy-category', new Error('log4json'));
-
 logger.debug('string logs', 'another string log', {customProp: ['also listed', true]}, 'yet another string');
-
 ```
 
 #### output
