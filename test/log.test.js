@@ -20,12 +20,12 @@ describe('log4json', () => {
   test('should return default props if no args', () => {
     const logger = jsonLayout();
     const result = JSON.parse(logger(eventGenerator()));
-    expect(result).not.toHaveProperty('msg');
+    expect(result).not.toHaveProperty('message');
     expect(result).not.toHaveProperty('category');
     expect(result).toHaveProperty('ts', 'startTime');
     expect(result).toHaveProperty('level', 'mock');
   });
-  test('should have msg ts and level if no category', () => {
+  test('should have message ts and level if no category', () => {
     const logger = jsonLayout();
     const result = JSON.parse(logger(eventGenerator('test')));
     expect(result).not.toHaveProperty('category');
@@ -38,7 +38,7 @@ describe('log4json', () => {
   test('should concat all string messages', () => {
     const logger = jsonLayout();
     const result = JSON.parse(logger(eventGenerator('concat', 'this message', 'with this one')));
-    expect(result).toHaveProperty('msg', 'concat this message with this one');
+    expect(result).toHaveProperty('message', 'concat this message with this one');
   });
   test('should assign all props in to output', () => {
     const logger = jsonLayout();
@@ -55,7 +55,7 @@ describe('log4json', () => {
   test('should concat the message with given separator', () => {
     const logger = jsonLayout({ separator: '.$.' });
     const result = JSON.parse(logger(eventGenerator('concat with', 'this message', 'with this one')));
-    expect(result).toHaveProperty('msg', 'concat with.$.this message.$.with this one');
+    expect(result).toHaveProperty('message', 'concat with.$.this message.$.with this one');
   });
   test('should format the message with given space', () => {
     [null, 1, 2, 3, 4]
@@ -68,7 +68,7 @@ describe('log4json', () => {
   test('should omit invalid data', () => {
     const logger = jsonLayout();
     const result = JSON.parse(logger(eventGenerator('valid', undefined, null)));
-    expect(result).toHaveProperty('msg', 'valid');
+    expect(result).toHaveProperty('message', 'valid');
   });
   test('should change the pre-reserved keys if the config has', () => {
     const logger = jsonLayout({
@@ -77,7 +77,7 @@ describe('log4json', () => {
         level: 'lvl',
         category: 'cat',
         stack: 'error',
-        msg: 'message',
+        message: 'context',
       },
     });
     const result = JSON.parse(logger(eventGeneratorWithCategory('my-category', 'custom props', new Error('stack'))));
@@ -94,7 +94,7 @@ describe('log4json', () => {
     expect(result).not.toHaveProperty('stack');
     expect(result).toHaveProperty('error');
 
-    expect(result).not.toHaveProperty('msg');
-    expect(result).toHaveProperty('message', 'custom props');
+    expect(result).not.toHaveProperty('message');
+    expect(result).toHaveProperty('context', 'custom props');
   });
 });
