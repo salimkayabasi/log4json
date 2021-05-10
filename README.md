@@ -60,7 +60,7 @@ logger.debug('done', new Error('salim'), 'test', { a: 1, b: 2 });
   "stack": "Error: salim\n    at Object.<anonymous> ...",
   "a": 1,
   "b": 2,
-  "msg": "done | test"
+  "message": "done | test"
 }
 
 ```
@@ -97,7 +97,7 @@ log4js.configure({
                     level: 'lvl',
                     category: 'cat',
                     stack: 'error',
-                    msg: 'message',
+                    message: 'context',
                 }
             }
         }
@@ -120,7 +120,7 @@ logger.debug('custom props', new Error('stack'));
 ```javascript
 {
   "error": "Error: stack\n    ....",
-  "message": "custom props",
+  "context": "custom props",
   "@timestamp": "2018-03-29T08:34:35.693Z",
   "lvl": "DEBUG",
   "cat": "custom-props"

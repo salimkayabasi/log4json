@@ -15,7 +15,7 @@ const defaultConfig = {
     level: 'level',
     category: 'category',
     stack: 'stack',
-    msg: 'msg',
+    message: 'message',
   },
 };
 
@@ -36,7 +36,7 @@ const transform = (config, items) => {
     });
 
   if (!isEmpty(messages)) {
-    overlay[config.props.msg] = messages.join(config.separator);
+    overlay[config.props.message] = messages.join(config.separator);
   }
   return overlay;
 };
