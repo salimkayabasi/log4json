@@ -4,9 +4,6 @@
   "description": "JSON wrapper for log4js",
   "main": "index.js",
   "scripts": {
-    "major": "npm version major -m \"New major version %s\"",
-    "minor": "npm version minor -m \"New minor version %s\"",
-    "patch": "npm version patch -m \"New patch version %s\"",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "test": "jest --runInBand --forceExit --detectOpenHandles"

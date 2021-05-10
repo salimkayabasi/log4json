@@ -2,7 +2,7 @@ const { addLayout, configure, getLogger } = require('log4js');
 const layout = require('../index');
 
 addLayout('json', layout);
-const setUpTest = (config = {}) => {
+const setUpTest = (config = {}, enableCallStack = false) => {
   configure({
     appenders: {
       log4json: {
@@ -17,6 +17,7 @@ const setUpTest = (config = {}) => {
       default: {
         appenders: ['log4json'],
         level: 'all',
+        enableCallStack,
       },
     },
   });
@@ -164,5 +165,13 @@ describe('log4json', () => {
 
     expect(result).not.toHaveProperty('message');
     expect(result).toHaveProperty('context', 'custom props');
+  });
+
+  test('should log fileName and callStack', () => {
+    setUpTest({}, true); // enableCallStack: true
+    logger = getLogger();
+    logger.info('stack trace is enabled');
+    const result = JSON.parse(spyConsole.mock.calls[0][0]);
+    expect(result).toHaveProperty('callStack', 'src/log4json.test.js:173:12');
   });
 });

@@ -8,6 +8,8 @@ const isObject = (value) => {
   return value != null && (type === 'object' || type === 'function');
 };
 
+const dir = `${process.cwd()}/`;
+
 const defaultConfig = {
   separator: ' ',
   space: null,
@@ -18,6 +20,7 @@ const defaultConfig = {
     category: 'category',
     stack: 'stack',
     message: 'message',
+    callStack: 'callStack',
   },
 };
 
@@ -43,16 +46,24 @@ const transform = (config, items) => {
 };
 
 const formatter = (event, options) => {
+  const {
+    data,
+    startTime, level: { levelStr }, categoryName, fileName, lineNumber, columnNumber,
+  } = event;
   const output = {
-    [options.props.ts]: event.startTime,
-    [options.props.level]: event.level.levelStr,
+    [options.props.ts]: startTime,
+    [options.props.level]: levelStr,
   };
 
-  if (event.categoryName !== 'default' || !options.omitDefaultCategory) {
-    output[options.props.category] = event.categoryName;
+  if (categoryName !== 'default' || !options.omitDefaultCategory) {
+    output[options.props.category] = categoryName;
+  }
+  if (fileName) {
+    const callStack = `${fileName.replace(dir, '')}:${lineNumber}:${columnNumber}`;
+    output[options.props.callStack] = callStack;
   }
   return {
-    ...transform(options, event.data),
+    ...transform(options, data),
     ...output,
   };
 };
