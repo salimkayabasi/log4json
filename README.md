@@ -29,12 +29,12 @@ Any of the property names can be overridden. You can override all field names on
 Default propery names are;
 ```json
 {
-  ts: 'ts',
-  level: 'level',
-  category: 'category',
-  stack: 'stack',
-  message: 'message',
-  callStack: 'callStack',
+  "ts": "ts",
+  "level": "level",
+  "category": "category",
+  "stack": "stack",
+  "message": "message",
+  "callStack": "callStack"
 }
 ```
 
