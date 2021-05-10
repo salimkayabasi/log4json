@@ -77,7 +77,7 @@ configure({
   }
 });
 
-const logger = getLogger('fancy-category', new Error('log4json'));
+const logger = getLogger('fancy-category');
 logger.debug('string logs', 'another string log', {customProp: ['also listed', true]}, 'yet another string');
 ```
 
