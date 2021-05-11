@@ -68,10 +68,14 @@ const formatter = (event, options) => {
   };
 };
 
-const jsonLayout = (config) => {
+const jsonLayout = (config = {}) => {
   const options = {
     ...defaultConfig,
     ...config,
+    props: {
+      ...defaultConfig.props,
+      ...config.props,
+    },
   };
   return (event) => {
     const result = formatter(event, options);
