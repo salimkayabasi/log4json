@@ -44,6 +44,15 @@ describe('log4json', () => {
     jest.useRealTimers();
   });
 
+  // keep it on top since it relies on code line
+  test('should log fileName and callStack', () => {
+    setUpTest({}, true); // enableCallStack: true
+    logger = getLogger();
+    logger.info('stack trace is enabled');
+    const result = JSON.parse(spyConsole.mock.calls[0][0]);
+    expect(result).toHaveProperty('callStack', 'src/log4json.test.js:51:12');
+  });
+
   test('should return stringified JSON', () => {
     setUpTest();
     logger = getLogger();
@@ -137,41 +146,34 @@ describe('log4json', () => {
     expect(result).toHaveProperty('message', 'valid');
   });
 
-  test('should change the pre-reserved keys if the config has', () => {
-    setUpTest({
-      props: {
-        ts: '@timestamp',
-        level: 'lvl',
-        category: 'cat',
-        stack: 'error',
-        message: 'context',
-      },
-    });
-    logger = getLogger('my-category');
-    logger.error('custom props', new Error('stack'));
-    const result = JSON.parse(spyConsole.mock.calls[0][0]);
+  describe('properties', () => {
+    const checkProperties = (props = {}, expecteds = []) => {
+      test('should have custom property', () => {
+        setUpTest({
+          props,
+        }, true);
+        logger = getLogger('custom-props');
+        logger.error('custom props');
+        const result = JSON.parse(spyConsole.mock.calls[0][0]);
 
-    expect(result).not.toHaveProperty('ts');
-    expect(result).toHaveProperty('@timestamp', startTime);
+        if (props) {
+          Object.entries(props).forEach(([key, value]) => {
+            expect(result).not.toHaveProperty(key);
+            expect(result).toHaveProperty(value);
+          });
+        }
+        expecteds.forEach((key) => {
+          expect(result).toHaveProperty(key);
+        });
+      });
+    };
 
-    expect(result).not.toHaveProperty('level');
-    expect(result).toHaveProperty('lvl', 'ERROR');
-
-    expect(result).not.toHaveProperty('category');
-    expect(result).toHaveProperty('cat', 'my-category');
-
-    expect(result).not.toHaveProperty('stack');
-    expect(result).toHaveProperty('error');
-
-    expect(result).not.toHaveProperty('message');
-    expect(result).toHaveProperty('context', 'custom props');
-  });
-
-  test('should log fileName and callStack', () => {
-    setUpTest({}, true); // enableCallStack: true
-    logger = getLogger();
-    logger.info('stack trace is enabled');
-    const result = JSON.parse(spyConsole.mock.calls[0][0]);
-    expect(result).toHaveProperty('callStack', 'src/log4json.test.js:173:12');
+    checkProperties({}, ['ts', 'message', 'level', 'category', 'callStack']);
+    checkProperties(null, ['ts', 'message', 'level', 'category', 'callStack']);
+    checkProperties({ ts: 'custom-timestamp' }, ['message', 'level', 'category', 'callStack']);
+    checkProperties({ message: 'custom-message' }, ['ts', 'level', 'category', 'callStack']);
+    checkProperties({ level: 'custom-level' }, ['ts', 'message', 'category', 'callStack']);
+    checkProperties({ category: 'custom-category' }, ['ts', 'message', 'level', 'callStack']);
+    checkProperties({ callStack: 'custom-callStack' }, ['ts', 'message', 'level', 'category']);
   });
 });
